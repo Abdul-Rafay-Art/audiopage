@@ -1,33 +1,42 @@
 <?php
 function SiteHeader() { ?>
 <header class="site-header">
-  <a class="brand" href="#top" aria-label="Saviom home">S/M</a>
+  <a class="brand" href="#top" aria-label="Aside home">ASIDE</a>
   <span class="header-wordmark" aria-hidden="true">vinylist</span>
-  <nav class="main-nav" aria-label="Main navigation"><a href="#artists">Artists</a><a href="#discover">Mixtapes</a><a href="#player">Awards</a></nav>
+  <nav class="main-nav" aria-label="Main navigation"><a href="#top">Home</a><a href="#player">Music</a><a href="#albums">Albums</a><a href="#artists">Artists</a><a href="#discover">Playlists</a><a href="#about">About</a></nav>
   <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span></button>
 </header>
+<?php }
+
+function FeaturedCollections($tracks) { ?>
+<section class="featured-collections" id="albums">
+  <div class="collections-heading"><div><p class="eyebrow">POPULAR ALBUMS</p><h2>Featured<br>Collections</h2></div><p>Timeless albums.<br>Always a good idea.</p><a href="#discover">View All&nbsp; →</a></div>
+  <div class="collection-grid"><?php foreach (array_slice($tracks, 0, 5) as $i => $track) { ?>
+    <button class="collection-card" type="button" data-play-track="<?= htmlspecialchars($track['id']) ?>"><span class="collection-art"><img src="<?= htmlspecialchars($track['coverUrl']) ?>" alt="<?= htmlspecialchars($track['album']) ?> album art" loading="lazy"><i>▶</i></span><strong><?= htmlspecialchars($track['album']) ?><?= $i > 0 ? ' · '.htmlspecialchars($track['title']) : '' ?></strong><small><?= htmlspecialchars($track['artist']) ?></small></button>
+  <?php } ?></div>
+</section>
 <?php }
 
 function VinylHero($tracks) { ?>
 <section class="hero" id="top">
   <div class="hero-layout">
-    <?php VinylPlayer(); ?>
     <div class="hero-copy">
-      <p class="hero-artist"><span class="artist-avatar">JD</span><span><strong>James Douglas (46)</strong><small>COLLECTOR</small></span><i>●</i></p>
-      <h1>aside<span>.</span></h1>
-      <p class="hero-intro hero-genres">GOOD MUSIC FOR THE LONG WAY HOME.</p>
-      <div class="tracklist-heading"><span>POPULAR</span><span></span><span></span></div>
-      <?php FeaturedTrackList($tracks); ?>
-      <a class="text-link" href="#discover">VIEW MORE <span>↗</span></a>
+      <p class="eyebrow">NOW PLAYING</p>
+      <h1>Album:<br>Mothership</h1>
+      <p class="hero-release">2025 · Led Zeppelin</p>
+      <p class="hero-intro">A collection of records for late nights, open roads and everything in between. Drop the needle and stay awhile.</p>
+      <div class="hero-actions"><button class="hero-play" type="button" data-play-track="<?= htmlspecialchars($tracks[0]['id']) ?>">▶ &nbsp; Play Album</button><button class="hero-round" type="button" aria-label="Like album">♡</button><button class="hero-round" type="button" aria-label="More album options">···</button></div>
+      <div class="hero-progress"><span></span></div><div class="hero-time"><span>00:42</span><span>03:58</span></div>
     </div>
+    <?php VinylPlayer(); ?>
     <aside class="hero-album-info" aria-label="Featured album">
       <img class="hero-album-cover" src="<?= htmlspecialchars($tracks[0]['coverUrl']) ?>" alt="<?= htmlspecialchars($tracks[0]['album']) ?> artwork">
-      <div class="album-info-top"><small>LAST SPINNED</small><span>♡</span></div>
-      <h2>Album: <?= htmlspecialchars($tracks[0]['album']) ?></h2>
+      <div class="album-info-top"><small>LAST SPINNED</small></div>
+      <h2><?= htmlspecialchars($tracks[0]['album']) ?></h2>
       <p class="album-release">2025 &nbsp;·&nbsp; <?= htmlspecialchars($tracks[0]['artist']) ?></p>
-      <h3>Info</h3>
-      <p class="album-description">A collection of records for late nights, open roads and everything in between. Drop the needle and stay awhile.</p>
-      <div class="album-actions"><a href="#discover">Order</a><a href="#discover">See Artwork</a></div>
+      <div class="tracklist-heading"><span>TRACKS</span></div>
+      <?php FeaturedTrackList($tracks); ?>
+      <a class="text-link" href="#discover">VIEW FULL ALBUM&nbsp; →</a>
     </aside>
   </div>
 </section>

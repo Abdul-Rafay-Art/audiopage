@@ -294,4 +294,29 @@
   const menu = $('.menu-toggle');
   menu?.addEventListener('click', () => { const open = menu.getAttribute('aria-expanded') !== 'true'; menu.setAttribute('aria-expanded', String(open)); $('.main-nav').classList.toggle('is-open', open); });
   $$('.main-nav a').forEach((link) => link.addEventListener('click', () => { menu.setAttribute('aria-expanded', 'false'); $('.main-nav').classList.remove('is-open'); }));
+
+  const heroSection = $('.hero');
+  const revealTargets = $$('.featured-collections, .discovery, .player-section, .artist-showcase, .collections-heading, .collection-card, .player-heading, .player-art, .artist-feature, .artist-gallery, .artist-backdrop, .discovery-content > .eyebrow, .discovery-content > h2, .discovery-content > .search-form, .discovery-content > .search-feedback, .player-status, .player-track-info, .player-controls, .player-message');
+  revealTargets.forEach((element) => element.classList.add('motion-pending'));
+  let revealFrame = 0;
+  function revealOnScroll() {
+    if (revealFrame) return;
+    revealFrame = window.requestAnimationFrame(() => {
+      revealFrame = 0;
+      const viewport = window.innerHeight;
+      if (heroSection) {
+        const heroRect = heroSection.getBoundingClientRect();
+        heroSection.classList.toggle('hero-is-ready', heroRect.top < viewport * .85 && heroRect.bottom > viewport * .15);
+      }
+      revealTargets.forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        const visible = rect.top < viewport * .85 && rect.bottom > viewport * .15;
+        element.classList.toggle('motion-visible', visible);
+        element.classList.toggle('motion-pending', !visible);
+      });
+    });
+  }
+  window.addEventListener('scroll', revealOnScroll, { passive: true });
+  window.addEventListener('resize', revealOnScroll, { passive: true });
+  revealOnScroll();
 })();

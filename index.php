@@ -16,8 +16,10 @@ $tracksJson = json_encode($tracks, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP |
 </head>
 <body>
   <main>
+    <?php SiteHeader(); ?>
     <?php VinylHero($tracks); ?>
     <?php MusicDiscovery($tracks); ?>
+    <?php FeaturedCollections($tracks); ?>
     <?php FeaturedAudioPlayer(); ?>
     <?php ArtistShowcase($artists); ?>
   </main>
